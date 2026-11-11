@@ -19,6 +19,9 @@ Then open `http://127.0.0.1:8000`. Stop the server with Ctrl+C.
 
 The visible content lives in `index.html`; visual styles live in `styles.css`.
 Search for the section IDs `about`, `performances`, `gallery`, and `contact`.
+The shared palette in `styles.css` uses black backgrounds, deep green feature
+sections, warm ivory text, and gold accents on both the home and thank-you pages.
+Keep text and form-control borders high-contrast when changing these colors.
 
 - **Name and biography:** update the name, page title, description, header, hero,
   footer, and biography together. The current bio is explicitly a placeholder,

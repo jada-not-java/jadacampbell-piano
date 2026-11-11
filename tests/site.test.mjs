@@ -109,6 +109,34 @@ test("accessibility and no-JavaScript affordances remain present", () => {
   assert.match(css, /:focus-visible/);
 });
 
+test("dark theme preserves readable text, gold accents, and visible form borders", () => {
+  const palette = Object.fromEntries([...css.matchAll(/--([\w-]+): (#[\da-f]{6});/g)]
+    .map(([, name, value]) => [name, value]));
+  const luminance = (hex) => {
+    const channels = hex.slice(1).match(/../g).map((channel) => {
+      const value = Number.parseInt(channel, 16) / 255;
+      return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+    });
+    return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+  };
+  const contrast = (foreground, background) => {
+    const values = [luminance(palette[foreground]), luminance(palette[background])];
+    return (Math.max(...values) + 0.05) / (Math.min(...values) + 0.05);
+  };
+  assert.match(css, /color-scheme: dark/);
+  for (const background of ["background", "surface", "green"]) {
+    for (const foreground of ["ink", "muted", "gold"]) {
+      assert.ok(contrast(foreground, background) >= 4.5, `${foreground} on ${background}`);
+    }
+  }
+  assert.ok(contrast("green-deep", "gold") >= 4.5, "Gold button text");
+  assert.ok(contrast("field-border", "surface") >= 3, "Form border against field");
+  assert.ok(contrast("field-border", "background") >= 3, "Form border against page");
+  for (const page of [html, thanks]) {
+    assert.ok(page.includes(`<meta name="theme-color" content="${palette.background}">`));
+  }
+});
+
 test("Pages publication is manual and only public site files are packaged", () => {
   assert.match(workflow, /on:\s+workflow_dispatch:/);
   assert.doesNotMatch(workflow, /^\s+(push|pull_request|schedule):/m);
