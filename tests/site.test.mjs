@@ -12,7 +12,7 @@ const workflow = await readFile(new URL(".github/workflows/pages.yml", root), "u
 
 test("all local assets exist and remain repository-subpath safe", async () => {
   const paths = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
-    .map((match) => match[1]).filter((path) => !path.startsWith("#") && !path.startsWith("https://"));
+    .map((match) => match[1]).filter((path) => !/^(#|https:\/\/|mailto:)/.test(path));
   assert.ok(paths.length > 0);
   for (const path of paths) {
     assert.ok(path.startsWith("./"), `Expected a relative asset: ${path}`);
@@ -59,12 +59,17 @@ test("provided performances, interview and solo channel are available without Ja
   assert.match(script, /player\.referrerPolicy = "strict-origin-when-cross-origin"/);
 });
 
-test("JavaScript parses and contact defaults to honest draft-only behavior", () => {
+test("JavaScript parses and contact uses the visible email without claiming delivery", () => {
   assert.doesNotThrow(() => new Script(script));
-  assert.match(script, /const CONTACT_EMAIL = ""/);
+  const contact = html.match(/id="contact-email" href="mailto:([^"]+)">([^<]+)<\/a>/);
+  assert.ok(contact, "A direct email link must work without JavaScript");
+  assert.equal(contact[1], contact[2], "Displayed address must match the email destination");
+  assert.match(contact[1], /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  assert.match(script, /const CONTACT_EMAIL = document\.querySelector\("#contact-email"\)\.textContent\.trim\(\)/);
   assert.match(html, /Draft only\. This does not submit/);
   assert.match(html, /id="email-inquiry" hidden/);
-  assert.doesNotMatch(html, /<iframe|action="https?:|mailto:/);
+  assert.doesNotMatch(html, /<iframe|action="https?:/);
+  assert.doesNotMatch(html.slice(html.indexOf('<section class="contact ')), /Contact details coming soon|contact address has not been added/);
   assert.doesNotMatch(script, /\bfetch\(|XMLHttpRequest|localStorage|sessionStorage/);
 });
 

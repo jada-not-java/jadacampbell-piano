@@ -1,7 +1,6 @@
 "use strict";
 
-// Add a real public booking address when ready. Empty means draft-only mode.
-const CONTACT_EMAIL = "";
+const CONTACT_EMAIL = document.querySelector("#contact-email").textContent.trim();
 
 document.documentElement.classList.add("js");
 

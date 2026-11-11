@@ -40,8 +40,10 @@ Search for the section IDs `about`, `performances`, `gallery`, and `contact`.
   JavaScript and remain available if playback is blocked. Local `file://` previews
   may be rejected by YouTube because no HTTP referrer is available; use the local
   HTTP server above or the direct links instead.
-- **Contact:** set `CONTACT_EMAIL` in `site.js` to a real address you are comfortable
-  publishing. Leave it empty until ready. The inquiry tool generates a local
+- **Contact:** the `#contact-email` link in `index.html` holds the public contact
+  address. To change it, update both its visible address and `mailto:` destination.
+  The inquiry tool reads this visible address, so there is no separate JavaScript
+  address to maintain. The inquiry tool generates a local
   draft; it never submits, sends, or stores a message. With an address configured,
   it offers a `mailto:` link that opens the visitor's email application for review
   and manual sending. It does not claim delivery. Long drafts may exceed an email
