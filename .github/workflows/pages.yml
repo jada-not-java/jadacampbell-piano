@@ -28,7 +28,7 @@ jobs:
       - name: Assemble public files only
         run: |
           mkdir _site
-          cp index.html styles.css site.js _site/
+          cp index.html thanks.html styles.css site.js _site/
           cp -r assets _site/assets
           touch _site/.nojekyll
       - name: Upload website

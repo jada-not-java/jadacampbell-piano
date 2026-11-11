@@ -43,6 +43,10 @@ document.querySelectorAll("[data-video-id]").forEach((container) => {
 
 const form = document.querySelector("#inquiry-form");
 const interest = document.querySelector("#interest");
+const submitButton = form.querySelector('button[type="submit"]');
+const submitLabel = document.querySelector("#inquiry-submit-label");
+const inquiryStatus = document.querySelector("#inquiry-status");
+let submitting = false;
 
 document.querySelectorAll("[data-inquiry]").forEach((link) => {
   link.addEventListener("click", () => {
@@ -50,15 +54,62 @@ document.querySelectorAll("[data-inquiry]").forEach((link) => {
   });
 });
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (submitting) return;
+
   const data = new FormData(form);
   const name = data.get("name").trim();
   const message = data.get("message").trim();
   if (!name || !message) {
-    event.preventDefault();
     const field = !name ? form.elements.namedItem("name") : form.elements.namedItem("message");
     field.setCustomValidity("Please enter more than spaces.");
     field.reportValidity();
     field.addEventListener("input", () => field.setCustomValidity(""), { once: true });
+    return;
+  }
+
+  submitting = true;
+  submitButton.disabled = true;
+  submitLabel.textContent = "Sending...";
+  form.setAttribute("aria-busy", "true");
+  inquiryStatus.classList.remove("is-error");
+  inquiryStatus.textContent = "Sending your inquiry...";
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
+  try {
+    const response = await fetch(form.action, {
+      method: "POST",
+      body: data,
+      headers: { Accept: "application/json" },
+      credentials: "omit",
+      signal: controller.signal,
+    });
+    const result = await response.json();
+    if (!response.ok || result?.ok !== true) {
+      const errors = Array.isArray(result?.errors)
+        ? result.errors.map((error) => error?.message).filter((message) => typeof message === "string")
+        : [];
+      inquiryStatus.textContent = errors.length
+        ? `${errors.join(" ")} Your message has been kept. You can also contact me by email.`
+        : "Submission could not be confirmed. Your message has been kept. Please try again later or contact me by email.";
+      inquiryStatus.classList.add("is-error");
+      inquiryStatus.focus();
+      return;
+    }
+
+    window.location.assign(new URL("./thanks.html", window.location.href).href);
+  } catch (error) {
+    console.error("Could not confirm Formspree submission.", error);
+    inquiryStatus.textContent = "We couldn't confirm whether your inquiry was received. Your message has been kept. Please wait before retrying, or contact me by email.";
+    inquiryStatus.classList.add("is-error");
+    inquiryStatus.focus();
+  } finally {
+    clearTimeout(timeout);
+    submitting = false;
+    submitButton.disabled = false;
+    submitLabel.textContent = "Send inquiry";
+    form.setAttribute("aria-busy", "false");
   }
 });

@@ -6,12 +6,13 @@ import { Script } from "node:vm";
 
 const root = new URL("../", import.meta.url);
 const html = await readFile(new URL("index.html", root), "utf8");
+const thanks = await readFile(new URL("thanks.html", root), "utf8");
 const script = await readFile(new URL("site.js", root), "utf8");
 const css = await readFile(new URL("styles.css", root), "utf8");
 const workflow = await readFile(new URL(".github/workflows/pages.yml", root), "utf8");
 
 test("all local assets exist and remain repository-subpath safe", async () => {
-  const paths = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
+  const paths = [...(html + thanks).matchAll(/(?:src|href)="([^"]+)"/g)]
     .map((match) => match[1]).filter((path) => !/^(#|https:\/\/|mailto:)/.test(path));
   assert.ok(paths.length > 0);
   for (const path of paths) {
@@ -81,7 +82,21 @@ test("contact posts the inquiry to Formspree without JavaScript and keeps direct
   assert.match(form[2], /sent to Formspree/);
   assert.doesNotMatch(html, /inquiry-draft|inquiry-result|copy-inquiry|Prepare inquiry|Draft only/);
   assert.doesNotMatch(script, /clearDraft|CONTACT_EMAIL|draft\.value/);
-  assert.doesNotMatch(script, /\bfetch\(|XMLHttpRequest|localStorage|sessionStorage/);
+  assert.match(script, /headers: \{ Accept: "application\/json" \}/);
+  assert.doesNotMatch(script, /XMLHttpRequest|localStorage|sessionStorage/);
+});
+
+test("thank-you page and redirect stay inside the repository subpath", () => {
+  assert.match(script, /new URL\("\.\/thanks\.html", window\.location\.href\)/);
+  assert.match(thanks, /<meta name="robots" content="noindex">/);
+  assert.equal([...thanks.matchAll(/<h1\b/g)].length, 1);
+  assert.match(thanks, /Your inquiry has been submitted/);
+  assert.match(thanks, /href="\.\/index\.html"/);
+  assert.doesNotMatch(thanks, /<script/);
+  assert.equal(
+    new URL("./thanks.html", "https://example.test/jadacampbell-piano/index.html#contact").pathname,
+    "/jadacampbell-piano/thanks.html",
+  );
 });
 
 test("accessibility and no-JavaScript affordances remain present", () => {
@@ -97,7 +112,7 @@ test("accessibility and no-JavaScript affordances remain present", () => {
 test("Pages publication is manual and only public site files are packaged", () => {
   assert.match(workflow, /on:\s+workflow_dispatch:/);
   assert.doesNotMatch(workflow, /^\s+(push|pull_request|schedule):/m);
-  assert.match(workflow, /cp index\.html styles\.css site\.js _site\//);
+  assert.match(workflow, /cp index\.html thanks\.html styles\.css site\.js _site\//);
   assert.match(workflow, /cp -r assets _site\/assets/);
   assert.doesNotMatch(workflow, /enablement:\s*true|cp -r \./);
 });

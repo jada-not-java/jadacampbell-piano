@@ -41,12 +41,19 @@ Search for the section IDs `about`, `performances`, `gallery`, and `contact`.
   HTTP server above or the direct links instead.
 - **Contact:** the `#contact-email` link in `index.html` holds the public contact
   address. To change it, update both its visible address and `mailto:` destination.
-  The contact form uses the **Basic HTML Formspree integration**: a native POST to
-  `https://formspree.io/f/mljbrneo`. It works on GitHub Pages without JavaScript,
-  an SDK, a build step, or a custom backend. The form submits `name`, `email`,
-  `interest`, `message`, and an inbox `_subject`. Formspree handles processing,
-  spam checks, and the next page's submission status; this site never displays
-  an unverified success message. Visitors' details are shared with Formspree only
+  The contact form uses a **progressively enhanced Formspree integration** at
+  `https://formspree.io/f/mljbrneo`. With JavaScript, a native `fetch` POST requests
+  JSON and redirects to the relative `./thanks.html` page only after Formspree
+  returns a successful HTTP response with `ok: true`. This uses Formspree's
+  free-plan AJAX support, not its paid server-side custom redirect setting.
+  No SDK, build step, or custom backend is needed. The form submits `name`,
+  `email`, `interest`, `message`, and an inbox `_subject`. While sending, repeat
+  submissions are blocked. Rejections and network errors appear beside the form;
+  the visitor's message is preserved. Requests time out after 30 seconds; an
+  interrupted response may still have been processed, so no automatic retry is
+  attempted. Formspree handles processing and spam checks. Without JavaScript,
+  the native POST remains available and Formspree shows its own confirmation or
+  error page. Visitors' details are shared with Formspree only
   when they submit, as disclosed beside the Send button. To use a different form,
   change the `action` in `index.html` and the endpoint assertion in the tests.
   Manage notification recipients and any domain restrictions in Formspree, not in
@@ -74,7 +81,7 @@ After you decide to publish:
    on `main`. Approve the `github-pages` environment deployment if prompted.
 4. Visit `https://jada-not-java.github.io/jadacampbell-piano/`.
 
-The workflow uploads only `index.html`, `styles.css`, `site.js`, and `assets`,
+The workflow uploads only `index.html`, `thanks.html`, `styles.css`, `site.js`, and `assets`,
 not development files or this README. Future updates require another manual run.
 No deployment command or workflow run is needed for local development.
 
@@ -92,8 +99,9 @@ They do not replace the browser checks below.
 
 Check at mobile and desktop widths; keyboard navigation, visible focus, menu
 toggle and Escape behavior; all section links; required and email field
-validation; inquiry selection links; the Formspree field payload; and the direct
-email link. A real submission sends an actual inquiry: use intentional test
+validation; inquiry selection links; the Formspree field payload; the success
+redirect; error handling; and the direct email link. Automated submission tests
+mock Formspree rather than sending messages. A real submission sends an actual inquiry: use intentional test
 content only when ready, then verify the Formspree dashboard and notification
 email. Structural checks do not prove inbox delivery. Ensure there are no missing assets or
 horizontal overflow. Respect reduced-motion preferences and keep all placeholder

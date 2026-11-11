@@ -156,8 +156,10 @@
               </div>
               <div class="field"><label for="interest">I&rsquo;m getting in touch about</label><select id="interest" name="interest"><option>Solo performance</option><option>Piano accompanying</option><option>Chamber music</option><option>Orchestral performance</option><option>Other collaboration</option></select></div>
               <div class="field"><label for="message">Tell me about your project <span>(required)</span></label><textarea id="message" name="message" rows="5" maxlength="5000" placeholder="A little about the music, dates, venue, and what you have in mind..." required></textarea></div>
-              <p class="form-help" id="inquiry-privacy">Your name, email, and project details are sent to Formspree to process your inquiry. You&rsquo;ll continue to Formspree for submission status. Sending an inquiry does not confirm availability.</p>
-              <button class="button button-dark" type="submit">Send inquiry <span aria-hidden="true">&#8599;</span></button>
+              <p class="form-help" id="inquiry-privacy">Your name, email, and project details are sent to Formspree to process your inquiry. Sending an inquiry does not confirm availability.</p>
+              <noscript><p class="form-help">With JavaScript disabled, Formspree will show your submission status on its own page.</p></noscript>
+              <button class="button button-dark" type="submit"><span id="inquiry-submit-label">Send inquiry</span> <span aria-hidden="true">&#8599;</span></button>
+              <p class="form-status" id="inquiry-status" role="status" aria-live="polite" tabindex="-1"></p>
             </form>
           </div>
         </div>

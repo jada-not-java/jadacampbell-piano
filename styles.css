@@ -152,6 +152,17 @@ select { min-height: 46px; }
 textarea { resize: vertical; }
 textarea::placeholder { color: #6d7167; opacity: 1; }
 .form-help { font-size: 11px; color: var(--muted); margin-bottom: 16px; }
+.button:disabled { cursor: wait; opacity: .65; }
+.form-status { margin-top: 20px; font-size: 13px; }
+.form-status:empty { display: none; }
+.form-status.is-error { padding: 14px 18px; color: #773c2d; background: #f0e2d7; border-left: 2px solid #99533f; }
+.thanks-main { min-height: calc(100vh - 245px); display: grid; align-items: center; }
+.thanks-card { width: 100%; }
+.thanks-card h1 { margin: 20px 0 30px; font-size: clamp(3.2rem, 7vw, 6rem); color: var(--ink); }
+.thanks-card h1 em { color: #79623b; }
+.thanks-card > p { max-width: 520px; }
+.thanks-card .button { margin-top: 30px; }
+.thanks-card .form-help { margin-top: 25px; }
 .site-footer { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding: 37px 6%; border-top: 1px solid var(--line); }
 .site-footer .wordmark { font-size: 23px; }
 .site-footer p { font-family: var(--serif); font-size: 15px; font-style: italic; color: var(--muted); }
