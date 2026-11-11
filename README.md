@@ -1,7 +1,7 @@
 # Jada Campbell | Classical Pianist
 
 A responsive, dependency-free artist website, built with HTML, CSS, and a little
-JavaScript. No build step, backend, analytics, or remote fonts. YouTube players
+JavaScript. No build step, custom backend, analytics, or remote fonts. YouTube players
 load only after a visitor chooses Play; no third-party media requests are made on
 initial page load. All artwork is original decorative SVG/CSS, not an artist photograph.
 
@@ -13,8 +13,7 @@ Open `index.html` in a browser. For an HTTP preview, if Python is installed:
 python -m http.server 8000 --bind 127.0.0.1
 ```
 
-Then open `http://127.0.0.1:8000`. Stop the server with Ctrl+C. A local HTTP server
-also gives more reliable clipboard support than opening a file directly.
+Then open `http://127.0.0.1:8000`. Stop the server with Ctrl+C.
 
 ## Replace the placeholder content
 
@@ -42,12 +41,16 @@ Search for the section IDs `about`, `performances`, `gallery`, and `contact`.
   HTTP server above or the direct links instead.
 - **Contact:** the `#contact-email` link in `index.html` holds the public contact
   address. To change it, update both its visible address and `mailto:` destination.
-  The inquiry tool reads this visible address, so there is no separate JavaScript
-  address to maintain. The inquiry tool generates a local
-  draft; it never submits, sends, or stores a message. With an address configured,
-  it offers a `mailto:` link that opens the visitor's email application for review
-  and manual sending. It does not claim delivery. Long drafts may exceed an email
-  application's link limit; the copy-draft option remains available.
+  The contact form uses the **Basic HTML Formspree integration**: a native POST to
+  `https://formspree.io/f/mljbrneo`. It works on GitHub Pages without JavaScript,
+  an SDK, a build step, or a custom backend. The form submits `name`, `email`,
+  `interest`, `message`, and an inbox `_subject`. Formspree handles processing,
+  spam checks, and the next page's submission status; this site never displays
+  an unverified success message. Visitors' details are shared with Formspree only
+  when they submit, as disclosed beside the Send button. To use a different form,
+  change the `action` in `index.html` and the endpoint assertion in the tests.
+  Manage notification recipients and any domain restrictions in Formspree, not in
+  the public site code. The direct email link is an independent fallback.
 - **Hero illustration:** `assets/piano.svg` is original decorative artwork and
   can remain, or be replaced with a licensed photograph and appropriate alt text.
 
@@ -55,9 +58,8 @@ All asset URLs are relative (`./assets/...`), so the site works both locally and
 under the GitHub Pages repository subpath `/jadacampbell-piano/`. Do not replace
 them with root-relative URLs such as `/styles.css`.
 
-The site remains readable and navigable without JavaScript. The draft tool is
-progressively enabled; without JavaScript visitors see an explicit contact notice.
-No browser storage is used. Drafts remain in page memory until navigation/reload.
+The site remains readable and navigable without JavaScript, including native
+contact-form submission and direct video links. No browser storage is used.
 
 ## GitHub Pages (when ready, not enabled by this project)
 
@@ -85,12 +87,14 @@ node --test
 ```
 
 These check asset paths, section links, inquiry categories, accessibility
-affordances, JavaScript syntax, draft-only defaults, and manual deployment.
+affordances, JavaScript syntax, Formspree configuration, and manual deployment.
 They do not replace the browser checks below.
 
 Check at mobile and desktop widths; keyboard navigation, visible focus, menu
 toggle and Escape behavior; all section links; required and email field
-validation; inquiry selection links; preparing and copying drafts; and the
-configured email link (if enabled). Ensure there are no missing assets or
+validation; inquiry selection links; the Formspree field payload; and the direct
+email link. A real submission sends an actual inquiry: use intentional test
+content only when ready, then verify the Formspree dashboard and notification
+email. Structural checks do not prove inbox delivery. Ensure there are no missing assets or
 horizontal overflow. Respect reduced-motion preferences and keep all placeholder
 labels until real content replaces them.

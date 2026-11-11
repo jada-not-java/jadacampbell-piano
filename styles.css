@@ -152,10 +152,6 @@ select { min-height: 46px; }
 textarea { resize: vertical; }
 textarea::placeholder { color: #6d7167; opacity: 1; }
 .form-help { font-size: 11px; color: var(--muted); margin-bottom: 16px; }
-.inquiry-result { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 24px; }
-.inquiry-result textarea { background: #eeeadf; }
-.draft-actions { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; margin-block: 15px; }
-.draft-actions .text-link { margin: 0; }
 .site-footer { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding: 37px 6%; border-top: 1px solid var(--line); }
 .site-footer .wordmark { font-size: 23px; }
 .site-footer p { font-family: var(--serif); font-size: 15px; font-style: italic; color: var(--muted); }

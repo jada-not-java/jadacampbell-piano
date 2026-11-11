@@ -59,17 +59,28 @@ test("provided performances, interview and solo channel are available without Ja
   assert.match(script, /player\.referrerPolicy = "strict-origin-when-cross-origin"/);
 });
 
-test("JavaScript parses and contact uses the visible email without claiming delivery", () => {
+test("contact posts the inquiry to Formspree without JavaScript and keeps direct email", () => {
   assert.doesNotThrow(() => new Script(script));
   const contact = html.match(/id="contact-email" href="mailto:([^"]+)">([^<]+)<\/a>/);
   assert.ok(contact, "A direct email link must work without JavaScript");
   assert.equal(contact[1], contact[2], "Displayed address must match the email destination");
   assert.match(contact[1], /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-  assert.match(script, /const CONTACT_EMAIL = document\.querySelector\("#contact-email"\)\.textContent\.trim\(\)/);
-  assert.match(html, /Draft only\. This does not submit/);
-  assert.match(html, /id="email-inquiry" hidden/);
-  assert.doesNotMatch(html, /<iframe|action="https?:/);
-  assert.doesNotMatch(html.slice(html.indexOf('<section class="contact ')), /Contact details coming soon|contact address has not been added/);
+  const form = html.match(/<form\b([^>]+)>([\s\S]*?)<\/form>/);
+  assert.ok(form);
+  assert.match(form[1], /action="https:\/\/formspree\.io\/f\/mljbrneo"/);
+  assert.match(form[1], /method="POST"/);
+  assert.doesNotMatch(form[1], /\bhidden\b/);
+  assert.match(form[1], /aria-describedby="inquiry-privacy"/);
+  assert.match(form[2], /name="_subject" value="New performance inquiry for Jada Campbell"/);
+  for (const field of ["name", "email", "message"]) {
+    assert.match(form[2], new RegExp(`<(?:input|textarea)\\b[^>]*name="${field}"[^>]*\\brequired\\b`));
+  }
+  assert.match(form[2], /type="email"/);
+  assert.match(form[2], /<select id="interest" name="interest">/);
+  assert.match(form[2], /Send inquiry/);
+  assert.match(form[2], /sent to Formspree/);
+  assert.doesNotMatch(html, /inquiry-draft|inquiry-result|copy-inquiry|Prepare inquiry|Draft only/);
+  assert.doesNotMatch(script, /clearDraft|CONTACT_EMAIL|draft\.value/);
   assert.doesNotMatch(script, /\bfetch\(|XMLHttpRequest|localStorage|sessionStorage/);
 });
 
@@ -77,9 +88,8 @@ test("accessibility and no-JavaScript affordances remain present", () => {
   assert.match(html, /<html lang="en">/);
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1);
   assert.match(html, /class="skip-link"/);
-  assert.match(html, /<noscript>/);
   assert.match(html, /aria-expanded="false" aria-controls="navigation"/);
-  assert.match(html, /role="status" aria-live="polite"/);
+  assert.match(html, /id="inquiry-privacy"/);
   assert.match(css, /prefers-reduced-motion: reduce/);
   assert.match(css, /:focus-visible/);
 });

@@ -146,25 +146,19 @@
       <section class="contact section-wrap" id="contact" aria-labelledby="contact-title">
         <div class="section-label"><span>04</span> Inquiries</div>
         <div class="contact-layout">
-          <div class="contact-copy"><p class="eyebrow">Get in touch</p><h2 id="contact-title">Let&rsquo;s make<br><em>music together.</em></h2><p>Have a concert, collaboration, or project in mind? Use this space to put the details into words.</p><div class="contact-notice"><strong>Performance &amp; collaboration inquiries</strong><p id="contact-availability">Prepare an inquiry, then open it in your email app to review and send. This website does not send or store messages.</p><a class="text-link" id="contact-email" href="mailto:jadacampbell9699@gmail.com">jadacampbell9699@gmail.com</a></div></div>
+          <div class="contact-copy"><p class="eyebrow">Get in touch</p><h2 id="contact-title">Let&rsquo;s make<br><em>music together.</em></h2><p>Have a concert, collaboration, or project in mind? Use this space to put the details into words.</p><div class="contact-notice"><strong>Performance &amp; collaboration inquiries</strong><p>Send an inquiry using the form, or email me directly.</p><a class="text-link" id="contact-email" href="mailto:jadacampbell9699@gmail.com">jadacampbell9699@gmail.com</a></div></div>
           <div>
-            <noscript><p class="contact-notice">The inquiry draft tool needs JavaScript. You can still contact Jada using the email link alongside this notice.</p></noscript>
-            <form id="inquiry-form" hidden>
+            <form id="inquiry-form" action="https://formspree.io/f/mljbrneo" method="POST" aria-describedby="inquiry-privacy">
+              <input type="hidden" name="_subject" value="New performance inquiry for Jada Campbell">
               <div class="form-row">
                 <div class="field"><label for="name">Your name <span>(required)</span></label><input id="name" name="name" autocomplete="name" maxlength="160" required></div>
                 <div class="field"><label for="email">Your email <span>(required)</span></label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" required></div>
               </div>
               <div class="field"><label for="interest">I&rsquo;m getting in touch about</label><select id="interest" name="interest"><option>Solo performance</option><option>Piano accompanying</option><option>Chamber music</option><option>Orchestral performance</option><option>Other collaboration</option></select></div>
               <div class="field"><label for="message">Tell me about your project <span>(required)</span></label><textarea id="message" name="message" rows="5" maxlength="5000" placeholder="A little about the music, dates, venue, and what you have in mind..." required></textarea></div>
-              <p class="form-help">Draft only. This does not submit a message or confirm availability.</p>
-              <button class="button button-dark" type="submit">Prepare inquiry <span aria-hidden="true">&#8599;</span></button>
+              <p class="form-help" id="inquiry-privacy">Your name, email, and project details are sent to Formspree to process your inquiry. You&rsquo;ll continue to Formspree for submission status. Sending an inquiry does not confirm availability.</p>
+              <button class="button button-dark" type="submit">Send inquiry <span aria-hidden="true">&#8599;</span></button>
             </form>
-            <div id="inquiry-result" class="inquiry-result" hidden>
-              <label for="inquiry-draft">Your inquiry draft <span>(not sent)</span></label>
-              <textarea id="inquiry-draft" rows="9" readonly></textarea>
-              <div class="draft-actions"><button class="button button-dark" id="copy-inquiry" type="button">Copy draft</button><a class="text-link" id="email-inquiry" hidden>Open email app <span aria-hidden="true">&#8599;</span></a></div>
-              <p id="draft-status" class="form-help" role="status" aria-live="polite"></p>
-            </div>
           </div>
         </div>
       </section>
