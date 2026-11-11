@@ -60,12 +60,10 @@ test("provided performances, interview and solo channel are available without Ja
   assert.match(script, /player\.referrerPolicy = "strict-origin-when-cross-origin"/);
 });
 
-test("contact posts the inquiry to Formspree without JavaScript and keeps direct email", () => {
+test("contact posts the inquiry to Formspree without JavaScript", () => {
   assert.doesNotThrow(() => new Script(script));
-  const contact = html.match(/id="contact-email" href="mailto:([^"]+)">([^<]+)<\/a>/);
-  assert.ok(contact, "A direct email link must work without JavaScript");
-  assert.equal(contact[1], contact[2], "Displayed address must match the email destination");
-  assert.match(contact[1], /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  assert.doesNotMatch(html, /contact-notice|contact-email/);
+  assert.doesNotMatch(script, /contact me by email/);
   const form = html.match(/<form\b([^>]+)>([\s\S]*?)<\/form>/);
   assert.ok(form);
   assert.match(form[1], /action="https:\/\/formspree\.io\/f\/mljbrneo"/);

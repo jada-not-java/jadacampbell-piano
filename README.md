@@ -42,9 +42,7 @@ Keep text and form-control borders high-contrast when changing these colors.
   JavaScript and remain available if playback is blocked. Local `file://` previews
   may be rejected by YouTube because no HTTP referrer is available; use the local
   HTTP server above or the direct links instead.
-- **Contact:** the `#contact-email` link in `index.html` holds the public contact
-  address. To change it, update both its visible address and `mailto:` destination.
-  The contact form uses a **progressively enhanced Formspree integration** at
+- **Contact:** the contact form uses a **progressively enhanced Formspree integration** at
   `https://formspree.io/f/mljbrneo`. With JavaScript, a native `fetch` POST requests
   JSON and redirects to the relative `./thanks.html` page only after Formspree
   returns a successful HTTP response with `ok: true`. This uses Formspree's
@@ -60,7 +58,7 @@ Keep text and form-control borders high-contrast when changing these colors.
   when they submit, as disclosed beside the Send button. To use a different form,
   change the `action` in `index.html` and the endpoint assertion in the tests.
   Manage notification recipients and any domain restrictions in Formspree, not in
-  the public site code. The direct email link is an independent fallback.
+  the public site code. The contact section does not display a direct email link.
 - **Hero illustration:** `assets/piano.svg` is original decorative artwork and
   can remain, or be replaced with a licensed photograph and appropriate alt text.
 
@@ -103,7 +101,7 @@ They do not replace the browser checks below.
 Check at mobile and desktop widths; keyboard navigation, visible focus, menu
 toggle and Escape behavior; all section links; required and email field
 validation; inquiry selection links; the Formspree field payload; the success
-redirect; error handling; and the direct email link. Automated submission tests
+redirect; and error handling. Automated submission tests
 mock Formspree rather than sending messages. A real submission sends an actual inquiry: use intentional test
 content only when ready, then verify the Formspree dashboard and notification
 email. Structural checks do not prove inbox delivery. Ensure there are no missing assets or

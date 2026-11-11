@@ -141,9 +141,6 @@ figcaption { display: flex; justify-content: space-between; gap: 10px; margin-to
 .contact-layout { display: grid; grid-template-columns: .9fr 1fr; gap: 10%; }
 .contact-copy h2 { margin: 20px 0 25px; }
 .contact-copy > p:last-of-type { font-size: 13px; color: var(--muted); max-width: 330px; }
-.contact-notice { margin-top: 30px; padding: 18px 20px; border-left: 2px solid var(--gold); background: var(--surface); font-size: 12px; max-width: 390px; }
-.contact-notice strong { font-weight: 600; }
-.contact-notice p { margin-top: 6px; color: var(--muted); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .field { margin-bottom: 22px; }
 label { display: block; margin-bottom: 9px; font-size: 11px; font-weight: 600; }
@@ -226,7 +223,7 @@ textarea::placeholder { color: var(--muted); opacity: 1; }
   .gallery-portrait { min-height: 360px; }
   .gallery-placeholder { min-height: 250px; }
   .opportunity-list a { font-size: 22px; padding-block: 18px; }
-  .contact-copy > p:last-of-type, .contact-notice { max-width: none; }
+  .contact-copy > p:last-of-type { max-width: none; }
   .form-row { grid-template-columns: 1fr 1fr; gap: 15px; }
   .site-footer { flex-wrap: wrap; padding: 30px 7%; }
   .site-footer p { width: 100%; order: 2; }

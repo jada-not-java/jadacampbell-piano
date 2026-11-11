@@ -92,8 +92,8 @@ form.addEventListener("submit", async (event) => {
         ? result.errors.map((error) => error?.message).filter((message) => typeof message === "string")
         : [];
       inquiryStatus.textContent = errors.length
-        ? `${errors.join(" ")} Your message has been kept. You can also contact me by email.`
-        : "Submission could not be confirmed. Your message has been kept. Please try again later or contact me by email.";
+        ? `${errors.join(" ")} Your message has been kept.`
+        : "Submission could not be confirmed. Your message has been kept. Please try again later.";
       inquiryStatus.classList.add("is-error");
       inquiryStatus.focus();
       return;
@@ -102,7 +102,7 @@ form.addEventListener("submit", async (event) => {
     window.location.assign(new URL("./thanks.html", window.location.href).href);
   } catch (error) {
     console.error("Could not confirm Formspree submission.", error);
-    inquiryStatus.textContent = "We couldn't confirm whether your inquiry was received. Your message has been kept. Please wait before retrying, or contact me by email.";
+    inquiryStatus.textContent = "We couldn't confirm whether your inquiry was received. Your message has been kept. Please wait before retrying.";
     inquiryStatus.classList.add("is-error");
     inquiryStatus.focus();
   } finally {
