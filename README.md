@@ -1,8 +1,9 @@
 # Jada Campbell | Classical Pianist
 
 A responsive, dependency-free artist website, built with HTML, CSS, and a little
-JavaScript. No build step, backend, analytics, remote fonts, or third-party media
-requests. All artwork is original decorative SVG/CSS, not an artist photograph.
+JavaScript. No build step, backend, analytics, or remote fonts. YouTube players
+load only after a visitor chooses Play; no third-party media requests are made on
+initial page load. All artwork is original decorative SVG/CSS, not an artist photograph.
 
 ## Preview locally
 
@@ -29,11 +30,16 @@ Search for the section IDs `about`, `performances`, `gallery`, and `contact`.
 - **Gallery:** replace each `.gallery-placeholder` with an actual image. Use
   `loading="lazy"`, meaningful alt text, image dimensions, and factual captions.
   Add image credits or permission notices where required. Keep file sizes modest.
-- **Videos:** replace the decorative `.video-placeholder` blocks with links to
-  your own recordings, or poster images linked to those recordings. Update the
-  titles, categories, and availability notes. A descriptive link such as
-  "Watch [composer and piece] on YouTube" is preferable to an unlabeled play icon.
-  Links preserve the current no-third-party-requests-until-click behavior.
+- **Videos:** the performance section includes Jada's solo YouTube channel,
+  Rachmaninoff's Piano Concerto No. 2, Gershwin's Rhapsody in Blue, and the Redmond
+  Tech Orchestra interview. To replace a video, update its `data-video-id`,
+  `data-video-title`, Play button's `aria-label`, visible title, and direct YouTube
+  link together. The ID is the part after `v=` in a YouTube watch URL. The players
+  use YouTube's privacy-enhanced domain and connect only after Play is selected.
+  YouTube may process visitor data once a player loads. Direct links work without
+  JavaScript and remain available if playback is blocked. Local `file://` previews
+  may be rejected by YouTube because no HTTP referrer is available; use the local
+  HTTP server above or the direct links instead.
 - **Contact:** set `CONTACT_EMAIL` in `site.js` to a real address you are comfortable
   publishing. Leave it empty until ready. The inquiry tool generates a local
   draft; it never submits, sends, or stores a message. With an address configured,

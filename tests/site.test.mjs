@@ -12,7 +12,7 @@ const workflow = await readFile(new URL(".github/workflows/pages.yml", root), "u
 
 test("all local assets exist and remain repository-subpath safe", async () => {
   const paths = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
-    .map((match) => match[1]).filter((path) => !path.startsWith("#"));
+    .map((match) => match[1]).filter((path) => !path.startsWith("#") && !path.startsWith("https://"));
   assert.ok(paths.length > 0);
   for (const path of paths) {
     assert.ok(path.startsWith("./"), `Expected a relative asset: ${path}`);
@@ -38,6 +38,25 @@ test("every collaboration link maps to an inquiry option", () => {
   const inquiries = [...html.matchAll(/data-inquiry="([^"]+)"/g)].map((match) => match[1]);
   assert.equal(inquiries.length, 5);
   inquiries.forEach((value) => assert.ok(options.includes(value)));
+});
+
+test("provided performances, interview and solo channel are available without JavaScript", () => {
+  assert.match(html, /href="https:\/\/www\.youtube\.com\/@jadacampbell5229"/);
+  const expectedVideos = ["Amu5UD6Q9bg", "URhVBis8MXo", "ChPC1qFlqUM"];
+  const videoIds = [...html.matchAll(/data-video-id="([^"]+)"/g)].map((match) => match[1]);
+  assert.deepEqual(videoIds, expectedVideos);
+  for (const id of expectedVideos) {
+    assert.ok(html.includes(`href="https://www.youtube.com/watch?v=${id}"`));
+  }
+  const buttons = [...html.matchAll(/<button class="video-load"([^>]+)>/g)];
+  assert.equal(buttons.length, 3);
+  buttons.forEach(([, attributes]) => {
+    assert.match(attributes, /aria-label="Play [^"]+"/);
+    assert.match(attributes, /\bhidden\b/);
+  });
+  assert.match(script, /https:\/\/www\.youtube-nocookie\.com\/embed\//);
+  assert.match(script, /player\.title = container\.dataset\.videoTitle/);
+  assert.match(script, /player\.referrerPolicy = "strict-origin-when-cross-origin"/);
 });
 
 test("JavaScript parses and contact defaults to honest draft-only behavior", () => {

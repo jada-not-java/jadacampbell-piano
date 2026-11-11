@@ -29,6 +29,21 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+document.querySelectorAll("[data-video-id]").forEach((container) => {
+  const button = container.querySelector(".video-load");
+  button.hidden = false;
+  button.addEventListener("click", () => {
+    const player = document.createElement("iframe");
+    player.src = `https://www.youtube-nocookie.com/embed/${container.dataset.videoId}?autoplay=1&rel=0`;
+    player.title = container.dataset.videoTitle;
+    player.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    player.allowFullscreen = true;
+    player.referrerPolicy = "strict-origin-when-cross-origin";
+    container.replaceChildren(player);
+    player.focus();
+  }, { once: true });
+});
+
 const form = document.querySelector("#inquiry-form");
 const interest = document.querySelector("#interest");
 const result = document.querySelector("#inquiry-result");
