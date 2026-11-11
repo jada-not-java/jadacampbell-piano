@@ -49,7 +49,7 @@ nav a:hover { border-bottom-color: var(--gold); color: var(--gold); }
 .hero .eyebrow { display: flex; align-items: center; gap: 15px; color: var(--gold); }
 .short-rule { width: 35px; height: 1px; background: currentColor; }
 h1 { margin-top: 32px; font-size: clamp(4.5rem, 7.2vw, 7.2rem); line-height: 1.03; letter-spacing: -.055em; }
-h1 em { color: #dec79b; }
+#hero-title { color: #dec79b; }
 .hero-intro { margin-top: 35px; font-size: 18px; letter-spacing: .025em; }
 .hero-intro span { color: #bdc9bf; font-size: 12px; }
 .button { display: inline-flex; gap: 36px; align-items: center; justify-content: space-between; padding: 15px 24px; border: 1px solid transparent; font-size: 12px; font-weight: 500; transition: background .2s, color .2s; }
