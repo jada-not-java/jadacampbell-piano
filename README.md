@@ -3,7 +3,8 @@
 A responsive, dependency-free artist website, built with HTML, CSS, and a little
 JavaScript. No build step, custom backend, analytics, or remote fonts. YouTube players
 load only after a visitor chooses Play; no third-party media requests are made on
-initial page load. All artwork is original decorative SVG/CSS, not an artist photograph.
+initial page load. The home banner and orchestra gallery image are photographs
+provided by Jada. Remaining SVG/CSS artwork is decorative, not an artist photograph.
 
 ## Preview locally
 
@@ -32,6 +33,8 @@ Keep text and form-control borders high-contrast when changing these colors.
 - **Gallery:** replace each `.gallery-placeholder` with an actual image. Use
   `loading="lazy"`, meaningful alt text, image dimensions, and factual captions.
   Add image credits or permission notices where required. Keep file sizes modest.
+  The orchestra photograph is `assets/orchestra-performance.jpg`; its gallery
+  preview links to the full-size image and preserves the complete composition.
 - **Videos:** the performance section includes Jada's solo YouTube channel,
   Rachmaninoff's Piano Concerto No. 2, Gershwin's Rhapsody in Blue, and the Redmond
   Tech Orchestra interview. To replace a video, update its `data-video-id`,
@@ -59,8 +62,10 @@ Keep text and form-control borders high-contrast when changing these colors.
   change the `action` in `index.html` and the endpoint assertion in the tests.
   Manage notification recipients and any domain restrictions in Formspree, not in
   the public site code. The contact section does not display a direct email link.
-- **Hero illustration:** `assets/piano.svg` is original decorative artwork and
-  can remain, or be replaced with a licensed photograph and appropriate alt text.
+- **Home banner:** `assets/hero-orchestra.jpg` is the supplied close-up piano
+  photograph. Update its alt text and dimensions in `index.html` when replacing
+  it. The responsive banner crops it to fill the image panel; the original
+  decorative illustration remains available in `assets/piano.svg`.
 
 All asset URLs are relative (`./assets/...`), so the site works both locally and
 under the GitHub Pages repository subpath `/jadacampbell-piano/`. Do not replace

@@ -34,6 +34,19 @@ test("section links have unique, existing destinations", () => {
   }
 });
 
+test("supplied photos appear in the banner and gallery with accessible image attributes", () => {
+  const hero = html.match(/<div class="hero-art">([\s\S]*?)<\/div>/)[1];
+  assert.match(hero, /src="\.\/assets\/hero-orchestra\.jpg"/);
+  assert.match(hero, /width="2000" height="1125"/);
+  assert.match(hero, /alt="[^"]+"/);
+  assert.match(hero, /fetchpriority="high"/);
+  const gallery = html.match(/<section class="gallery[\s\S]*?<\/section>/)[0];
+  assert.match(gallery, /href="\.\/assets\/orchestra-performance\.jpg"/);
+  assert.match(gallery, /src="\.\/assets\/orchestra-performance\.jpg"/);
+  assert.match(gallery, /width="2000" height="1333" loading="lazy" decoding="async" alt="[^"]+"/);
+  assert.doesNotMatch(gallery, /gallery-stage|Original photographs coming soon/);
+});
+
 test("every collaboration link maps to an inquiry option", () => {
   const options = [...html.matchAll(/<option>([^<]+)<\/option>/g)].map((match) => match[1]);
   const inquiries = [...html.matchAll(/data-inquiry="([^"]+)"/g)].map((match) => match[1]);
