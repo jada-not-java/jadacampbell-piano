@@ -31,7 +31,8 @@ Keep text and form-control borders high-contrast when changing these colors.
   image in `assets`. Supply descriptive `alt`, intrinsic `width` and `height`,
   and responsive styling. Remove the "Photograph to come" caption.
 - **Gallery:** the supplied photographs are `assets/orchestra-performance.jpg`,
-  `assets/rto-origins-12.jpg`, and `assets/rto-origins-14.jpg`. Each preview links
+  `assets/rto-origins-12.jpg`, `assets/rto-origins-14.jpg`,
+  `assets/grand-piano-performance.jpg`, and `assets/concert-stage.jpeg`. Each preview links
   to the full-size image and preserves the complete composition. To add photos,
   copy a `.gallery-item` figure and update its link, image source, dimensions,
   alt text, and factual caption. Keep lazy loading and modest file sizes.
