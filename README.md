@@ -30,11 +30,12 @@ Keep text and form-control borders high-contrast when changing these colors.
 - **Portrait:** replace `.portrait-placeholder` with an `<img>` pointing to an
   image in `assets`. Supply descriptive `alt`, intrinsic `width` and `height`,
   and responsive styling. Remove the "Photograph to come" caption.
-- **Gallery:** replace each `.gallery-placeholder` with an actual image. Use
-  `loading="lazy"`, meaningful alt text, image dimensions, and factual captions.
-  Add image credits or permission notices where required. Keep file sizes modest.
-  The orchestra photograph is `assets/orchestra-performance.jpg`; its gallery
-  preview links to the full-size image and preserves the complete composition.
+- **Gallery:** the supplied photographs are `assets/orchestra-performance.jpg`,
+  `assets/rto-origins-12.jpg`, and `assets/rto-origins-14.jpg`. Each preview links
+  to the full-size image and preserves the complete composition. To add photos,
+  copy a `.gallery-item` figure and update its link, image source, dimensions,
+  alt text, and factual caption. Keep lazy loading and modest file sizes.
+  Add image credits or permission notices where required.
 - **Videos:** the performance section includes Jada's solo YouTube channel,
   Rachmaninoff's Piano Concerto No. 2, Gershwin's Rhapsody in Blue, and the Redmond
   Tech Orchestra interview. To replace a video, update its `data-video-id`,

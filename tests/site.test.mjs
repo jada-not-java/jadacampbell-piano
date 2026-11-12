@@ -45,6 +45,11 @@ test("supplied photos appear in the banner and gallery with accessible image att
   assert.match(gallery, /src="\.\/assets\/orchestra-performance\.jpg"/);
   assert.match(gallery, /width="2000" height="1333" loading="lazy" decoding="async" alt="[^"]+"/);
   assert.doesNotMatch(gallery, /gallery-stage|Original photographs coming soon/);
+  for (const [file, width] of [["rto-origins-12.jpg", 1999], ["rto-origins-14.jpg", 2000]]) {
+    assert.ok(gallery.includes(`href="./assets/${file}"`));
+    assert.ok(gallery.includes(`src="./assets/${file}" width="${width}" height="1333" loading="lazy" decoding="async" alt="`));
+  }
+  assert.doesNotMatch(gallery, /gallery-placeholder|Photograph to come/);
 });
 
 test("every collaboration link maps to an inquiry option", () => {
