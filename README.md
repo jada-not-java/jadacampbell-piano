@@ -16,7 +16,7 @@ python -m http.server 8000 --bind 127.0.0.1
 
 Then open `http://127.0.0.1:8000`. Stop the server with Ctrl+C.
 
-## Replace the placeholder content
+## Edit content and replace placeholders
 
 The visible content lives in `index.html`; visual styles live in `styles.css`.
 Search for the section IDs `about`, `performances`, `gallery`, and `contact`.
@@ -25,8 +25,9 @@ sections, warm ivory text, and gold accents on both the home and thank-you pages
 Keep text and form-control borders high-contrast when changing these colors.
 
 - **Name and biography:** update the name, page title, description, header, hero,
-  footer, and biography together. The current bio is explicitly a placeholder,
-  with no invented education, awards, affiliations, or performance history.
+  footer, and biography together. The biography draws on Jada's supplied resume
+  and performance recordings. Keep dates, awards, education, and affiliations
+  grounded in supplied information; do not imply past teaching roles are current.
 - **Portrait:** replace `.portrait-placeholder` with an `<img>` pointing to an
   image in `assets`. Supply descriptive `alt`, intrinsic `width` and `height`,
   and responsive styling. Remove the "Photograph to come" caption.
