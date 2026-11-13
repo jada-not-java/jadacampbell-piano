@@ -28,9 +28,10 @@ Keep text and form-control borders high-contrast when changing these colors.
   footer, and biography together. The biography draws on Jada's supplied resume
   and performance recordings. Keep dates, awards, education, and affiliations
   grounded in supplied information; do not imply past teaching roles are current.
-- **Portrait:** replace `.portrait-placeholder` with an `<img>` pointing to an
-  image in `assets`. Supply descriptive `alt`, intrinsic `width` and `height`,
-  and responsive styling. Remove the "Photograph to come" caption.
+- **Portrait:** `assets/jada-campbell-portrait.jpg` is Jada's supplied artist
+  portrait in the biography. It displays uncropped at its natural aspect ratio.
+  When replacing it, update its source, descriptive `alt`, and intrinsic `width`
+  and `height` in `index.html`.
 - **Gallery:** the supplied photographs are `assets/orchestra-performance.jpg`,
   `assets/rto-origins-12.jpg`, `assets/rto-origins-14.jpg`,
   `assets/grand-piano-performance.jpg`, and `assets/concert-stage.jpeg`. Each preview links

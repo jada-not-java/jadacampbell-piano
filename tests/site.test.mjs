@@ -34,7 +34,10 @@ test("section links have unique, existing destinations", () => {
   }
 });
 
-test("supplied photos appear in the banner and gallery with accessible image attributes", () => {
+test("supplied photos appear in the banner, biography and gallery with accessible image attributes", () => {
+  const about = html.match(/<section class="about[\s\S]*?<\/section>/)[0];
+  assert.match(about, /class="artist-portrait" src="\.\/assets\/jada-campbell-portrait\.jpg" width="1500" height="2000" loading="lazy" decoding="async" alt="[^"]+"/);
+  assert.doesNotMatch(about, /portrait-placeholder|Photograph to come/);
   const hero = html.match(/<div class="hero-art">([\s\S]*?)<\/div>/)[1];
   assert.match(hero, /src="\.\/assets\/hero-orchestra\.jpg"/);
   assert.match(hero, /width="2000" height="1125"/);
