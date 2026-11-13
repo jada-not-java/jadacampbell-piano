@@ -95,7 +95,6 @@ test("contact posts the inquiry to Formspree without JavaScript", () => {
   assert.match(form[1], /action="https:\/\/formspree\.io\/f\/mljbrneo"/);
   assert.match(form[1], /method="POST"/);
   assert.doesNotMatch(form[1], /\bhidden\b/);
-  assert.match(form[1], /aria-describedby="inquiry-privacy"/);
   assert.match(form[2], /name="_subject" value="New performance inquiry for Jada Campbell"/);
   for (const field of ["name", "email", "message"]) {
     assert.match(form[2], new RegExp(`<(?:input|textarea)\\b[^>]*name="${field}"[^>]*\\brequired\\b`));
@@ -103,7 +102,7 @@ test("contact posts the inquiry to Formspree without JavaScript", () => {
   assert.match(form[2], /type="email"/);
   assert.match(form[2], /<select id="interest" name="interest">/);
   assert.match(form[2], /Send inquiry/);
-  assert.match(form[2], /sent to Formspree/);
+  assert.doesNotMatch(form[0], /inquiry-privacy/);
   assert.doesNotMatch(html, /inquiry-draft|inquiry-result|copy-inquiry|Prepare inquiry|Draft only/);
   assert.doesNotMatch(script, /clearDraft|CONTACT_EMAIL|draft\.value/);
   assert.match(script, /headers: \{ Accept: "application\/json" \}/);
@@ -128,7 +127,6 @@ test("accessibility and no-JavaScript affordances remain present", () => {
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1);
   assert.match(html, /class="skip-link"/);
   assert.match(html, /aria-expanded="false" aria-controls="navigation"/);
-  assert.match(html, /id="inquiry-privacy"/);
   assert.match(css, /prefers-reduced-motion: reduce/);
   assert.match(css, /:focus-visible/);
 });
