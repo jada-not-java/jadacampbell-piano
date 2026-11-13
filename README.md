@@ -24,12 +24,23 @@ The shared palette in `styles.css` uses black backgrounds, deep green feature
 sections, warm ivory text, and gold accents on both the home and thank-you pages.
 Keep text and form-control borders high-contrast when changing these colors.
 
+At tablet and phone widths (950px and below), navigation uses a collapsible menu
+and biography, collaboration, and contact layouts stack into one column. Without
+JavaScript, navigation stays visible. The root font size is `medium`, and font
+sizes use relative units so browser font preferences are respected. Mobile form
+fields use `1rem` text (16px at the usual browser default) to avoid focus zoom on
+iOS, and primary links and buttons have 44px touch targets.
+Phone video panels retain a 16:9 aspect ratio.
+
 - **Name and biography:** update the name, page title, description, header, hero,
   footer, and biography together. The biography draws on Jada's supplied resume
   and performance recordings. Keep dates, awards, education, and affiliations
   grounded in supplied information; do not imply past teaching roles are current.
 - **Portrait:** `assets/jada-campbell-portrait.jpg` is Jada's supplied artist
   portrait in the biography. It displays uncropped at its natural aspect ratio.
+  On wide screens, it aligns with the top of the biography and stays sticky while
+  the text scrolls, stopping at the section's end. Its height fits the viewport.
+  On tablet and phone layouts, it remains above the text and scrolls normally.
   When replacing it, update its source, descriptive `alt`, and intrinsic `width`
   and `height` in `index.html`.
 - **Gallery:** the supplied photographs are `assets/orchestra-performance.jpg`,
@@ -62,7 +73,7 @@ Keep text and form-control borders high-contrast when changing these colors.
   attempted. Formspree handles processing and spam checks. Without JavaScript,
   the native POST remains available and Formspree shows its own confirmation or
   error page. Visitors' details are shared with Formspree only
-  when they submit, as disclosed beside the Send button. To use a different form,
+  when they submit. To use a different form,
   change the `action` in `index.html` and the endpoint assertion in the tests.
   Manage notification recipients and any domain restrictions in Formspree, not in
   the public site code. The contact section does not display a direct email link.
